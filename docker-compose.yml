@@ -24,8 +24,8 @@ services:
     # Backend API
     backend:
         build:
-            context: .
-            dockerfile: Dockerfile
+            context: ./backend
+            dockerfile: dockerfile
         container_name: finance_backend
         environment:
             DATABASE_URL: postgresql://${POSTGRES_USER:-finance_user}:${POSTGRES_PASSWORD:-finance_password}@db:5432/${POSTGRES_DB:-finance_db}
@@ -37,8 +37,8 @@ services:
         ports:
             - "${BACKEND_PORT:-8000}:8000"
         volumes:
-            - .:/app
-            - ./ml_models:/app/ml_models
+            - ./backend:/app
+            - ./backend/ml_models:/app/ml_models
         depends_on:
             db:
                 condition: service_healthy
